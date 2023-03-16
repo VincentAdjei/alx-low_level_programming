@@ -1,5 +1,8 @@
 #include<stdio.h>
-/*main - A program that prints the size of various types*/
+/**
+*main - A program that prints the size of various data types
+*Return: always 0 (success)
+*/
 int main(void)
 {
 	int intType;
