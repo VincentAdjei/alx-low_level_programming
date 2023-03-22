@@ -1,18 +1,16 @@
 #include "main.h"
-/**
- * This file contains a function for computing the absolute value of an integer.
- */
 
 /**
- * Computes the absolute value of an integer.
- *
- * @param i The integer to compute the absolute value of.
- * @return The absolute value of the integer i.
+ * _abs - computes the absolute value of an integer
+ * @n: the int to check
+ * Return: the absolute value of int
  */
-int _abs(int i) {
-    if (i < 0) {
-        return -i;
-    } else {
-        return i;
-    }
+int _abs(int n)
+{
+	if (n >= 0)
+	{
+		return (n);
+	}
+	return (-n);
 }
+
