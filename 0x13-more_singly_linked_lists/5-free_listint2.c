@@ -6,20 +6,16 @@
  *
  * Return: void
  */
-
 void free_listint2(listint_t **head)
 {
-	listint_t *vin;
+	listint_t *current;
 
-	if (head == NULL)
-		return;
-
-	while (*head)
-	{
-		vin = (*head)->next;
-		*head = vin;
-		free(*head);
-	}
-
+	while (*head != NULL)
+{
+	current = *head;
+	*head = (*head)->next;
+	free(current);
+}
 	*head = NULL;
 }
+
