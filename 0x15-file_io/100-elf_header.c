@@ -1,3 +1,8 @@
+/*
+ * File: 100-elf_header.c
+ * Auth: Suara Ayomide
+ */
+
 #include <elf.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -6,60 +11,60 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void check_elf(unsigned char *magic_numbers);
-void print_magic(unsigned char *magic_numbers);
-void print_class(unsigned char *magic_numbers);
-void print_data(unsigned char *magic_numbers);
-void print_version(unsigned char *magic_numbers);
-void print_abi(unsigned char *magic_numbers);
-void print_osabi(unsigned char *magic_numbers);
-void print_type(unsigned int file_type, unsigned char *magic_numbers);
-void print_entry(unsigned long int entry_address, unsigned char *magic_numbers);
-void close_file(int file_descriptor);
+void check_elf(unsigned char *e_ident);
+void print_magic(unsigned char *e_ident);
+void print_class(unsigned char *e_ident);
+void print_data(unsigned char *e_ident);
+void print_version(unsigned char *e_ident);
+void print_abi(unsigned char *e_ident);
+void print_osabi(unsigned char *e_ident);
+void print_type(unsigned int e_type, unsigned char *e_ident);
+void print_entry(unsigned long int e_entry, unsigned char *e_ident);
+void close_elf(int elf);
 
 /**
  * check_elf - Checks if a file is an ELF file.
- * @magic_numbers: A pointer to an array containing the ELF magic numbers.
+ * @e_ident: A pointer to an array containing the ELF magic numbers.
  *
  * Description: If the file is not an ELF file - exit code 98.
  */
-void check_elf(unsigned char *magic_numbers)
+void check_elf(unsigned char *e_ident)
 {
-  int index;
+	int index;
 
-  for (index = 0; index < 4; index++)
-  {
-    if (magic_numbers[index] != 127 &&
-        magic_numbers[index] != 'E' &&
-        magic_numbers[index] != 'L' &&
-        magic_numbers[index] != 'F')
-    {
-      dprintf(STDERR_FILENO, "Error: Not an ELF filen");
-      exit(98);
-    }
-  }
+	for (index = 0; index < 4; index++)
+	{
+		if (e_ident[index] != 127 &&
+		    e_ident[index] != 'E' &&
+		    e_ident[index] != 'L' &&
+		    e_ident[index] != 'F')
+		{
+			dprintf(STDERR_FILENO, "Error: Not an ELF file\n");
+			exit(98);
+		}
+	}
 }
 
 /**
- * printElfMagicNumbers - Prints the magic numbers of an ELF header.
- * @elfMagicNumbers: A pointer to an array containing the ELF magic numbers.
+ * print_magic - Prints the magic numbers of an ELF header.
+ * @e_ident: A pointer to an array containing the ELF magic numbers.
  *
  * Description: Magic numbers are separated by spaces.
  */
-void printElfMagicNumbers(unsigned char *elfMagicNumbers)
+void print_magic(unsigned char *e_ident)
 {
-int currentIndex;
+	int index;
 
 	printf("  Magic:   ");
 
-	for (currentIndex = 0; currentIndex < EI_NIDENT; currentIndex++)
-{
-	printf("%02x", elfMagicNumbers[currentIndex]);
+	for (index = 0; index < EI_NIDENT; index++)
+	{
+		printf("%02x", e_ident[index]);
 
-	if (currentIndex == EI_NIDENT - 1)
-      printf("n");
-    else
-      printf(" ");
+		if (index == EI_NIDENT - 1)
+			printf("\n");
+		else
+			printf(" ");
 	}
 }
 
